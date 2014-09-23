@@ -1,0 +1,43 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link id="stylesheet" rel="stylesheet" type="text/css" href="StyleSheet.css" />
+    <style type="text/css">
+        .siteBanner
+        {
+            width: 950px;
+            height: 100px;
+        }
+        .siteFooter
+        {
+            width: 950px;
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="pageContainer">
+        
+        <img alt="site banner and logo" class="siteBanner" src="Images/SiteLogoandBanner_02.gif" />
+        <br />
+        <br />
+        <br />
+
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">     
+        </asp:ContentPlaceHolder>
+
+        <br />
+        <br />
+        <img alt="site footer" class="siteFooter" src="Images/Footer_07.gif" />
+    </div>
+    </form>
+         
+</body>
+</html>

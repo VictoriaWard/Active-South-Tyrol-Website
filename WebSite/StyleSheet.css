@@ -1,0 +1,67 @@
+﻿#pageContainer
+{
+    margin-left: auto;
+    margin-right: auto;
+    width:950px;
+
+}
+
+body 
+{
+    /*background: -webkit-linear-gradient(white, orange); /* For Safari 5.1 to 6.0 */
+    /*background: -o-linear-gradient(white, orange); /* For Opera 11.1 to 12.0 */
+    /*background: -moz-linear-gradient(white, orange); /* For Firefox 3.6 to 15 */
+    /*background: linear-gradient(white, orange); /* Standard syntax */
+    /*background-image: url("http://localhost:53338/Site-bkground-orange-grad.gif");
+    background-size:cover;*/
+    background: #d6f6ba;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size:small;
+}
+
+.div
+{
+    border: 2px solid #c7fc93;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50px;    /*does not show in dev version, poss due to vs, should show when launched?*/
+    width: 900px;
+    height: 349px;
+
+}
+
+.panel
+{
+    background: #ffffff;
+    padding: 10px;
+    /*float:left;*/
+ 
+}
+
+.panelHead
+{
+    background: #6bbf68;
+    padding: 10px;
+    color: #ffffff;
+    font-size:large;
+   
+
+}
+
+.textbox
+{
+    border: 2px solid #c7fc93;
+    box-sizing:border-box;
+}
+
+.textbox2
+{
+    border: 2px solid #c7fc93;
+    padding: 5px;
+    box-sizing:border-box;
+}
+
+
+
+
+
