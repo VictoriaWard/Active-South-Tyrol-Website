@@ -13,14 +13,15 @@
         <asp:Panel ID="Panel1" runat="server" CssClass="panel" Height="86px" Width="880px">
             <asp:Button ID="NewEventButton" runat="server" Height="85px" OnClick="NewEventButton_Click" Text="Create a new event" Width="192px" />
             &nbsp;
-            <asp:Image ID="Image1" runat="server" Height="79px" Width="672px" />
+            <asp:Image ID="Image1" runat="server" Height="79px" Width="583px" />
+            &nbsp;<asp:Button ID="LogOutButton" runat="server" OnClick="LogOutButton_Click" Text="Log out" />
         </asp:Panel>
     
         <br />
         <asp:Panel ID="Panel2" runat="server" Height="479px" CssClass="panel">
             My events:<br />
             <br />
-            <asp:Panel ID="Panel3" runat="server" Height="209px" ScrollBars="Vertical">
+            <asp:Panel ID="Panel3" runat="server" Height="168px" ScrollBars="Vertical">
             </asp:Panel>
             <br />
             <asp:Button ID="EventBrowseButton" runat="server" Height="36px" OnClick="EventBrowseButton_Click" Text="Browse events near you" Width="166px" />

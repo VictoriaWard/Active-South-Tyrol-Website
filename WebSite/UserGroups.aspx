@@ -13,14 +13,15 @@
         <asp:Panel ID="Panel1" runat="server" CssClass="panel" Height="86px" Width="880px">
             <asp:Button ID="NewGroupButton" runat="server" Height="85px" OnClick="NewGroupButton_Click" Text="Create a new group" Width="192px" />
             &nbsp;
-            <asp:Image ID="Image1" runat="server" Height="79px" Width="672px" />
+            <asp:Image ID="Image1" runat="server" Height="79px" Width="589px" />
+            &nbsp;<asp:Button ID="LogOutButton" runat="server" OnClick="LogOutButton_Click" Text="Log out" />
         </asp:Panel>
     
         <br />
         <asp:Panel ID="Panel2" runat="server" Height="479px" CssClass="panel">
             My groups:<br />
             <br />
-            <asp:Panel ID="Panel3" runat="server" Height="209px" ScrollBars="Vertical">
+            <asp:Panel ID="Panel3" runat="server" Height="167px" ScrollBars="Vertical">
             </asp:Panel>
             <br />
             <asp:Button ID="GroupBrowseButton" runat="server" Height="36px" OnClick="GroupBrowseButton_Click" Text="Browse groups near you" Width="166px" />

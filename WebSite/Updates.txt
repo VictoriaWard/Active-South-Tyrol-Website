@@ -1,0 +1,28 @@
+﻿12/10 
+- added re-enter password box on register page, checks user has entered same password twice before accepting registration details
+- deleted username fields from site and from databases (username is superfluous), amended code accordingly
+- added log out feature (added button to userhome, userevents, usergroups, userfriends pages)
+- added search event page with event search by name function
+- added search group page with group search by anem function
+
+to do - high priority:
+- add leave group and leave event
+- add remove friend
+- add password specifications, ie. must be 8-16 chars and include at least one upper case letter and one number
+- add error logging
+- group search functionality
+- set public/private options
+- add real date/time for events
+- create image storage and add image functionality to user profile, events and groups
+- add navigation buttons
+
+- tidy up display
+
+
+other to do:
+- develop event search page to include key word search
+- event search and group search should include search by date and or within specified location radius functions
+- add keep me logged in option ?
+- add user profile news item functionality
+- add event and group sorting
+- add invite functionality

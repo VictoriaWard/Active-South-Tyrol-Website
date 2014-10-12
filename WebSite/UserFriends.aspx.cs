@@ -102,4 +102,11 @@ public partial class UserFriends : System.Web.UI.Page
         // to do
     }
 
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        // destroy all session vars and transfer user to login page
+        Session.Contents.RemoveAll();
+        Server.Transfer("Login.aspx");
+    }
 }

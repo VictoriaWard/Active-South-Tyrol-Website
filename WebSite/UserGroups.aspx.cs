@@ -73,11 +73,17 @@ public partial class UserGroups : System.Web.UI.Page
 
     protected void GroupSearchButton_Click(object sender, EventArgs e)
     {
-        // to do
+        Server.Transfer("GroupSearch.aspx");
     }
 
     protected void GroupInviteButton_Click(object sender, EventArgs e)
     {
         // to do
+    }
+    protected void LogOutButton_Click(object sender, EventArgs e)
+    {
+        // destroy all session vars and transfer user to login page
+        Session.Contents.RemoveAll();
+        Server.Transfer("Login.aspx");
     }
 }

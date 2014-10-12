@@ -234,5 +234,11 @@ public partial class UserHome : System.Web.UI.Page
     {
         Server.Transfer("UserFriends.aspx");
     }
-    
+
+    protected void LogOutButton_Click(object sender, EventArgs e)
+    {
+        // destroy all session vars and transfer user to login page
+        Session.Contents.RemoveAll();
+        Server.Transfer("Login.aspx");
+    }
 }

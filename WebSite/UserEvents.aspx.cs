@@ -74,7 +74,7 @@ public partial class Events : System.Web.UI.Page
 
     protected void EventSearchButton_Click(object sender, EventArgs e)
     {
-        // to do
+        Server.Transfer("EventSearch.aspx");
     }
 
     protected void EventInviteButton_Click(object sender, EventArgs e)
@@ -82,4 +82,10 @@ public partial class Events : System.Web.UI.Page
         // to do
     }
 
+    protected void LogOutButton_Click(object sender, EventArgs e)
+    {
+        // destroy all session vars and transfer user to login page
+        Session.Contents.RemoveAll();
+        Server.Transfer("Login.aspx");
+    }
 }

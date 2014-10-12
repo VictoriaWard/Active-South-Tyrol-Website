@@ -19,17 +19,6 @@
         
         <asp:Panel ID="PanelRegister" runat="server" CssClass="panel" Width="500px" >
             
-            <br />
-            User name:
-            <asp:TextBox ID="UserNameText" runat="server" MaxLength="16" CssClass="textbox"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="UserNameValidator" runat="server" ControlToValidate="UserNameText" ErrorMessage="Please enter a user name.">*</asp:RequiredFieldValidator>
-            <asp:RegularExpressionValidator ID="UserNameExpressionValidator" runat="server" ControlToValidate="UserNameText" ValidationExpression="^.{1,16}"></asp:RegularExpressionValidator>
-            <br />
-            Password:
-            <asp:TextBox ID="PasswordText" runat="server" MaxLength="16" TextMode="Password" CssClass="textbox"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="PasswordRequiredFieldValidator" runat="server" ControlToValidate="PasswordText" ErrorMessage="Please enter a passowrd.">*</asp:RequiredFieldValidator>
-            <br />
-            <br />
             First name:
             <asp:TextBox ID="FirstNameText" runat="server" MaxLength="50" CssClass="textbox"></asp:TextBox>
             <asp:RequiredFieldValidator ID="FirstNameValidator" runat="server" ControlToValidate="FirstNameText" ErrorMessage="First name is required.">*</asp:RequiredFieldValidator>
@@ -44,11 +33,18 @@
             <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="EmailText" ErrorMessage="Please enter a valid email address." ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
             
             <br />
-            
             <br />
-            
+            Password:&nbsp;<asp:TextBox ID="PasswordText" runat="server" CssClass="textbox" MaxLength="16" OnTextChanged="PasswordText_TextChanged" TextMode="Password"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="PasswordRequiredFieldValidator" runat="server" ControlToValidate="PasswordText" ErrorMessage="Please enter a passowrd.">*</asp:RequiredFieldValidator>
+            <br />
+            Re-enter password:
+            <asp:TextBox ID="PasswordText0" runat="server" CssClass="textbox" MaxLength="16" TextMode="Password"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="PasswordRequiredFieldValidator0" runat="server" ControlToValidate="PasswordText" ErrorMessage="Please enter a passowrd.">*</asp:RequiredFieldValidator>
+            <asp:Label ID="PasswordErrLabel" runat="server" Text="Label" Visible="False"></asp:Label>
+            <br />
+            <br />
             <asp:Button ID="Submitbtn" runat="server" OnClick="Submitbtn_Click" Text="Submit" />
-            &nbsp;
+&nbsp;
             <asp:Button ID="GotoLoginButton" runat="server" OnClick="GotoLoginButton_Click" Text="Already registered? Login here" Width="200px" />
             <br />
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" Height="35px" Width="346px" />

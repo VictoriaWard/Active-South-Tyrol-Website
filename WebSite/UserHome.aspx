@@ -63,6 +63,7 @@
         </div> 
     &nbsp;&nbsp;&nbsp;
         <asp:ImageButton ID="NewFriendRequestsButton" runat="server" visible="false" Height="50px" OnClick="ViewFriendRequestsButton_Click" style="margin-right: 0px" Width="50px" ImageUrl="http://pixabay.com/static/uploads/photo/2012/05/07/13/47/baby-48509_640.png" />
+    &nbsp;<asp:Button ID="LogOutButton" runat="server" OnClick="LogOutButton_Click" Text="Log out" />
     </div>
        
 </asp:Content>
