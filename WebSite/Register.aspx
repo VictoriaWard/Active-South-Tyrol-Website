@@ -17,7 +17,7 @@
                 Register new user:
             </asp:Panel>
         
-        <asp:Panel ID="PanelRegister" runat="server" CssClass="panel" Width="500px" >
+        <asp:Panel ID="PanelRegister" runat="server" CssClass="panel" Width="500px" Height="349px" >
             
             First name:
             <asp:TextBox ID="FirstNameText" runat="server" MaxLength="50" CssClass="textbox"></asp:TextBox>
@@ -30,25 +30,24 @@
             Email address:
             <asp:TextBox ID="EmailText" runat="server" MaxLength="100" CssClass="textbox"></asp:TextBox>
             <asp:RequiredFieldValidator ID="EmailRequiredFieldValidator" runat="server" ControlToValidate="EmailText" ErrorMessage="Please enter a valid email address.">*</asp:RequiredFieldValidator>
-            <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="EmailText" ErrorMessage="Please enter a valid email address." ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="EmailText" ErrorMessage="Please enter a valid email address." ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" Font-Size="X-Small"></asp:RegularExpressionValidator>
             
             <br />
             <br />
-            Password:&nbsp;<asp:TextBox ID="PasswordText" runat="server" CssClass="textbox" MaxLength="16" OnTextChanged="PasswordText_TextChanged" TextMode="Password"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="PasswordRequiredFieldValidator" runat="server" ControlToValidate="PasswordText" ErrorMessage="Please enter a passowrd.">*</asp:RequiredFieldValidator>
+            Password:&nbsp;<asp:TextBox ID="PasswordText" runat="server" CssClass="textbox" MaxLength="16" TextMode="Password"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="PasswordRequiredFieldValidator" runat="server" ControlToValidate="PasswordText" ErrorMessage="Please enter a password.">*</asp:RequiredFieldValidator>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="PasswordText" ErrorMessage="Passwords must be between 8 and 16 characters and include at least one upper case letter and one numeric character" Font-Size="X-Small" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$"></asp:RegularExpressionValidator>
             <br />
             Re-enter password:
-            <asp:TextBox ID="PasswordText0" runat="server" CssClass="textbox" MaxLength="16" TextMode="Password"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="PasswordRequiredFieldValidator0" runat="server" ControlToValidate="PasswordText" ErrorMessage="Please enter a passowrd.">*</asp:RequiredFieldValidator>
-            <asp:Label ID="PasswordErrLabel" runat="server" Text="Label" Visible="False"></asp:Label>
+            <asp:TextBox ID="PasswordReenter" runat="server" CssClass="textbox" MaxLength="16" TextMode="Password"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="PasswordRequiredFieldValidator0" runat="server" ControlToValidate="PasswordText" ErrorMessage="Please enter a password.">*</asp:RequiredFieldValidator>
+            <asp:Label ID="PasswordErrLabel" runat="server" Text="Label" Visible="False" Font-Size="X-Small"></asp:Label>
             <br />
             <br />
             <asp:Button ID="Submitbtn" runat="server" OnClick="Submitbtn_Click" Text="Submit" />
-&nbsp;
-            <asp:Button ID="GotoLoginButton" runat="server" OnClick="GotoLoginButton_Click" Text="Already registered? Login here" Width="200px" />
-            <br />
-            <asp:ValidationSummary ID="ValidationSummary1" runat="server" Height="35px" Width="346px" />
-            <br />
+            &nbsp;
+            <p>Already signed up? <a href="Login.aspx">login here</a></p>
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" Height="35px" Width="346px" Font-Size="Small" />
             <asp:Label ID="LabelErr" runat="server" Text="Label" Visible="False"></asp:Label>
         </asp:Panel>
     </div>

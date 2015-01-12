@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="UserHome.aspx.cs" Inherits="UserHome" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage2.master" AutoEventWireup="true" CodeFile="UserHome.aspx.cs" Inherits="UserHome" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
  
@@ -14,7 +14,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id= "UserHomeDiv1" class="div">
-        <asp:TextBox ID="UserNameText" runat="server" Height="30px" Width="599px" ReadOnly="True" CssClass="panelHead" Font-Bold="False">User Name</asp:TextBox>
+        <asp:TextBox ID="UserNameText" runat="server" Height="30px" Width="492px" ReadOnly="True" CssClass="panelHead" Font-Bold="False">User Name</asp:TextBox>
         
         <div style="float:left;">
             <asp:Panel ID="Panel1" runat="server" CssClass="panel" Height="469px" Width="604px">
@@ -26,8 +26,8 @@
                 <asp:Label ID="LabelErr" runat="server" Text="Label" Visible="false"></asp:Label>
                 <br />
                 Upload a photo:<br />
-                <asp:FileUpload ID="FileUpload1" runat="server" />
-                &nbsp;<asp:Button ID="SubmitPhotoButton" runat="server" OnClick="SubmitPhotoButton_Click" Text="Submit" />
+                <asp:FileUpload ID="FileUpload2" runat="server" />
+                &nbsp;<asp:Button ID="SubmitPhotoButton0" runat="server" OnClick="SubmitPhotoButton_Click" Text="Submit" style="height: 26px" />
                 <br />
                 <br />
                 <br />
@@ -38,9 +38,15 @@
 
         <div style="float:right; width: 259px; position:relative; z-index:0; top: 0px; left: 0px;" id="UserNavDiv">
             <asp:Panel ID="Panel2"  runat="server"  CssClass="panel" Width="236px">
-                <img id= "userProfileImg" alt="user profile picture" class="border" dir="ltr" src="Images/DefaultProfile_03.gif"/>
-                &nbsp;
-                <asp:Button ID="ChangeProfile" runat="server" Font-Size="XX-Small" Height="17px" OnClick="ChangeProfile_Click" Text="Edit" Width="30px" />
+                <%--<img id= "userProfileImg" alt="user profile picture" class="border" dir="ltr" src="Images/DefaultProfile_03.gif"/>--%>
+                <asp:Image ID ="userProfileImage" runat="server" Height="150px" Width="200px"/>
+                &nbsp;&nbsp;
+                <asp:Label ID="SelectPhotoLabel" runat="server" Font-Size="XX-Small" Text="Select a photo: " Visible="False"></asp:Label>
+                <asp:Button ID="ChangeProfile" runat="server" Font-Size="XX-Small" Height="17px" OnClick="ChangeProfile_Click" Text="Change photo" Width="81px" />
+                &nbsp;<asp:FileUpload ID="ProfileImageUpload" runat="server" Visible="False" />
+                <br />
+                <asp:Button ID="SubmitProfileImageButton" runat="server" Height="18px" OnClick="SubmitPhotoButton_Click" Text="Save photo" Visible="False" Width="88px" />
+                <br />
                 <br />
                 <br />
                 
@@ -53,11 +59,8 @@
                 <br />
                 <br />
                 
-                <asp:Button ID="MyEvents" runat="server" OnClick="MyEvents_Click" Text="My Events" />
-                <asp:Button ID="MyGroups" runat="server" OnClick="MyGroups_Click" Text="My Groups" />
                 <br />
                 <br />
-                <asp:Button ID="MyPhotos" runat="server" OnClick="MyPhotos_Click" Text="My Photos" />
                 <asp:Button ID="MyFriends" runat="server" OnClick="MyFriends_Click" Text="My Friends" />
             </asp:Panel>
         </div> 

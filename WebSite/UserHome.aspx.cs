@@ -142,7 +142,8 @@ public partial class UserHome : System.Web.UI.Page
     
     protected void ChangeProfile_Click(object sender, EventArgs e)
     {
-        Server.Transfer("AddNewProfileImage.aspx");
+        ProfileImageUpload.Visible = true;
+        SubmitProfileImageButton.Visible = true;
     }
     
     protected void EditAboutMe_Click(object sender, EventArgs e)
@@ -227,7 +228,54 @@ public partial class UserHome : System.Web.UI.Page
 
     protected void SubmitPhotoButton_Click(object sender, EventArgs e)
     {
-        //to do
+        if (ProfileImageUpload.HasFile) {
+            ProfileImageUpload.PostedFile.SaveAs(Server.MapPath("~/Data/") + ProfileImageUpload.FileName);
+        }
+
+        string fileName = "~/Data/" + ProfileImageUpload.FileName;
+        int rowsAffected = 0;
+
+        //add img file path to db
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["UsersConnectionString1"].ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand("UPDATE [UserDetails] SET ProfileImage = @profileImage WHERE Email = @userEmail", connection))
+                {
+                    command.Parameters.AddWithValue("@profileImage", fileName);
+                    command.Parameters.AddWithValue("@userEmail", Session["UserEmail"]);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        rowsAffected = reader.RecordsAffected;
+                        reader.Close();
+                    }
+                }
+            }
+        }
+
+        catch (Exception ex)
+        {
+            //To do: add to windows log
+            Console.WriteLine("Some sort of error occured: " + ex.Message);
+            SelectPhotoLabel.Text = "Something went wrong =( Please try again";
+        }
+
+        // check db updated
+        if (rowsAffected == 0)
+        {
+            SelectPhotoLabel.Text = "Your update was unsuccessful. Please try again later.";
+        }
+        else
+        {
+            SelectPhotoLabel.Visible = false;
+            ProfileImageUpload.Visible = false;
+            SubmitProfileImageButton.Visible = false;
+            userProfileImage.ImageUrl = fileName;
+
+        }
+
+
     }
 
     protected void ViewFriendRequestsButton_Click(object sender, ImageClickEventArgs e)
@@ -241,4 +289,6 @@ public partial class UserHome : System.Web.UI.Page
         Session.Contents.RemoveAll();
         Server.Transfer("Login.aspx");
     }
+
+
 }

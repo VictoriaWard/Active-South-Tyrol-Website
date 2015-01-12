@@ -1,43 +1,63 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+﻿
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" />
     <title></title>
-    <asp:ContentPlaceHolder id="head" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    <link id="stylesheet" rel="stylesheet" type="text/css" href="StyleSheet.css" />
-    <style type="text/css">
-        .siteBanner
-        {
-            width: 950px;
-            height: 100px;
-        }
-        .siteFooter
-        {
-            width: 950px;
-            height: 70px;
-        }
-    </style>
 </head>
+
 <body>
     <form id="form1" runat="server">
-    <div id="pageContainer">
-        
-        <img alt="site banner and logo" class="siteBanner" src="Images/SiteLogoandBanner_02.gif" />
-        <br />
-        <br />
-        <br />
 
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">     
-        </asp:ContentPlaceHolder>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Active South Tyrol</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    
+                </div>
 
-        <br />
-        <br />
-        <img alt="site footer" class="siteFooter" src="Images/Footer_07.gif" />
-    </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <%--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>--%>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                                              
+                    </ul>
+   
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+
+        <div class="container col-centered">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
     </form>
-         
+
+    <!-- latest jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,44 +17,52 @@ public partial class Register : System.Web.UI.Page
     
     protected void Submitbtn_Click(object sender, EventArgs e)
     {
-        // check password ren-entered correctly
-        if (PasswordText.Text == PasswordText0.Text)
+        //check if email address already registered
+        //to do
+        
+
+
+        // check password re-entered correctly
+        if (PasswordText.Text == PasswordReenter.Text)
         
         {
-            SqlDataSource testDataSource = new SqlDataSource();
-            testDataSource.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["UsersConnectionString1"].ToString();
-
-            testDataSource.InsertCommandType = SqlDataSourceCommandType.Text;
-            testDataSource.InsertCommand = "INSERT INTO [UserDetails] (FirstName, LastName, Email, Password, IPAddress, DateTimeStamp) VALUES (@FirstName, @LastName, @Email, @Password, @IPAddress, @DateTimeStamp)";
-
-            testDataSource.InsertParameters.Add("FirstName", FirstNameText.Text);
-            testDataSource.InsertParameters.Add("LastName", LastNameText.Text);
-            testDataSource.InsertParameters.Add("Email", EmailText.Text);
-            testDataSource.InsertParameters.Add("Password", PasswordText.Text);
-            testDataSource.InsertParameters.Add("IPAddress", Request.UserHostAddress.ToString());
-            testDataSource.InsertParameters.Add("DateTimeStamp", DateTime.Now.ToString());
+            //salt and hash password
+            string salt;
+            salt = CreateSalt(10);
+            string safePass;
+            safePass = GenerateSHA256Hash(PasswordText.Text, salt);
 
             int rowsAffected = 0;
             Session["UserEmail"] = EmailText.Text;
 
+            //insert user reg details into db
             try
             {
-                rowsAffected = testDataSource.Insert();
+                using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["UsersConnectionString1"].ConnectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("INSERT INTO [UserDetails] (FirstName, LastName, Email, Password, IPAddress, DateTimeStamp, Salt) VALUES (@FirstName, @LastName, @Email, @Password, @IPAddress, @DateTimeStamp, @Salt)", connection))
+                    {
+                        command.Parameters.AddWithValue("@FirstName", FirstNameText.Text);
+                        command.Parameters.AddWithValue("@LastName", LastNameText.Text);
+                        command.Parameters.AddWithValue("@Email", EmailText.Text);
+                        command.Parameters.AddWithValue("@Password", safePass);
+                        command.Parameters.AddWithValue("@IPAddress", Request.UserHostAddress.ToString());
+                        command.Parameters.AddWithValue("@DateTimeStamp", DateTime.Now.ToString());
+                        command.Parameters.AddWithValue("@Salt", salt);
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();                     
+                    }
+                }
             }
-
             catch (Exception ex)
             {
                 //To do: add to windows log
                 Console.WriteLine("An error has occured: " + ex.Message);
-                LabelErr.Text = "Something went wrong =( Please try again";
+                LabelErr.Text = "Couldn't connect to database. Please try again.";
                 LabelErr.Visible = true;
             }
 
-            finally
-            {
-                testDataSource = null;
-            }
-
+            //if details successfully added
             if (rowsAffected != 0)
             {
                 Server.Transfer("UserHome.aspx");
@@ -60,25 +70,51 @@ public partial class Register : System.Web.UI.Page
 
             else
             {
-                Server.Transfer("Login.aspx");
+                string err;
+                Console.WriteLine("An error has occured: user details not inserted into database");
+                LabelErr.Text = "Unable to register your details. Please try again.";
+                LabelErr.Visible = true;
+                err = "An error has occured: user details not inserted into database" + DateTime.Now;
+                //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"errorlog.txt", true))
+                //{
+                //    file.WriteLine(err);
+                //}
             }
         }
-         
+        
+        //if password reenter doesn't match
         else
         {
             PasswordErrLabel.Visible = true;
             PasswordErrLabel.Text = "Please ensure that passwords match";
         }
-
     }
 
-
-    protected void GotoLoginButton_Click(object sender, EventArgs e)
+    //generate salt method
+    public String CreateSalt(int size)
     {
-        Server.Transfer("Login.aspx");
+        var rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
+        var buff = new byte[size];
+        rng.GetBytes(buff);
+        return Convert.ToBase64String(buff);
     }
-    protected void PasswordText_TextChanged(object sender, EventArgs e)
-    {
 
+    //hash password method
+    public String GenerateSHA256Hash(String input, String salt)
+    {
+        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input + salt);
+        System.Security.Cryptography.SHA256Managed sha256hashstring = new System.Security.Cryptography.SHA256Managed();
+        byte[] hash = sha256hashstring.ComputeHash(bytes);
+
+        return ByteArrayToHexString(hash);
+    }
+
+    //byte array to hex string converter method
+    public static string ByteArrayToHexString(byte[] ba)
+    {
+        StringBuilder hex = new StringBuilder(ba.Length * 2);
+        foreach (byte b in ba)
+            hex.AppendFormat("{0:x2}", b);
+        return hex.ToString();
     }
 }
