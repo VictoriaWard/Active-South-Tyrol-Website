@@ -18,75 +18,109 @@ public partial class Register : System.Web.UI.Page
     protected void Submitbtn_Click(object sender, EventArgs e)
     {
         //check if email address already registered
-        //to do
-        
+        bool registered = false;
 
-
-        // check password re-entered correctly
-        if (PasswordText.Text == PasswordReenter.Text)
-        
+        try
         {
-            //salt and hash password
-            string salt;
-            salt = CreateSalt(10);
-            string safePass;
-            safePass = GenerateSHA256Hash(PasswordText.Text, salt);
-
-            int rowsAffected = 0;
-            Session["UserEmail"] = EmailText.Text;
-
-            //insert user reg details into db
-            try
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["UsersConnectionString1"].ConnectionString))
             {
-                using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["UsersConnectionString1"].ConnectionString))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM [UserDetails] WHERE Email = @Email", connection))
                 {
-                    using (SqlCommand command = new SqlCommand("INSERT INTO [UserDetails] (FirstName, LastName, Email, Password, IPAddress, DateTimeStamp, Salt) VALUES (@FirstName, @LastName, @Email, @Password, @IPAddress, @DateTimeStamp, @Salt)", connection))
+                    command.Parameters.AddWithValue("@Email", EmailText.Text);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        command.Parameters.AddWithValue("@FirstName", FirstNameText.Text);
-                        command.Parameters.AddWithValue("@LastName", LastNameText.Text);
-                        command.Parameters.AddWithValue("@Email", EmailText.Text);
-                        command.Parameters.AddWithValue("@Password", safePass);
-                        command.Parameters.AddWithValue("@IPAddress", Request.UserHostAddress.ToString());
-                        command.Parameters.AddWithValue("@DateTimeStamp", DateTime.Now.ToString());
-                        command.Parameters.AddWithValue("@Salt", salt);
-                        connection.Open();
-                        rowsAffected = command.ExecuteNonQuery();                     
+                        while (reader.Read())
+                        {
+                            registered = reader.HasRows;
+                        }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                //To do: add to windows log
-                Console.WriteLine("An error has occured: " + ex.Message);
-                LabelErr.Text = "Couldn't connect to database. Please try again.";
-                LabelErr.Visible = true;
-            }
-
-            //if details successfully added
-            if (rowsAffected != 0)
-            {
-                Server.Transfer("UserHome.aspx");
-            }
-
-            else
-            {
-                string err;
-                Console.WriteLine("An error has occured: user details not inserted into database");
-                LabelErr.Text = "Unable to register your details. Please try again.";
-                LabelErr.Visible = true;
-                err = "An error has occured: user details not inserted into database" + DateTime.Now;
-                //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"errorlog.txt", true))
-                //{
-                //    file.WriteLine(err);
-                //}
-            }
         }
-        
-        //if password reenter doesn't match
+        catch (Exception ex)
+        {
+            //To do: add to windows log
+            Console.WriteLine("An error has occured: " + ex.Message);
+            LabelErr.Text = "Couldn't connect to database. Please try again.";
+            LabelErr.Visible = true;
+        }
+
+        //if email address found
+        if (registered == true)
+        {
+            Console.WriteLine("Email address already registered");
+            LabelErr.Text = "Email address already registered. Click below to log in.";
+            LabelErr.Visible = true;
+        }
+
         else
         {
-            PasswordErrLabel.Visible = true;
-            PasswordErrLabel.Text = "Please ensure that passwords match";
+            // check password re-entered correctly
+            if (PasswordText.Text == PasswordReenter.Text)
+            {
+                //salt and hash password
+                string salt;
+                salt = CreateSalt(10);
+                string safePass;
+                safePass = GenerateSHA256Hash(PasswordText.Text, salt);
+
+                int rowsAffected = 0;
+                Session["UserEmail"] = EmailText.Text;
+
+                //insert user reg details into db
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["UsersConnectionString1"].ConnectionString))
+                    {
+                        using (SqlCommand command = new SqlCommand("INSERT INTO [UserDetails] (FirstName, LastName, Email, Password, IPAddress, DateTimeStamp, Salt) VALUES (@FirstName, @LastName, @Email, @Password, @IPAddress, @DateTimeStamp, @Salt)", connection))
+                        {
+                            command.Parameters.AddWithValue("@FirstName", FirstNameText.Text);
+                            command.Parameters.AddWithValue("@LastName", LastNameText.Text);
+                            command.Parameters.AddWithValue("@Email", EmailText.Text);
+                            command.Parameters.AddWithValue("@Password", safePass);
+                            command.Parameters.AddWithValue("@IPAddress", Request.UserHostAddress.ToString());
+                            command.Parameters.AddWithValue("@DateTimeStamp", DateTime.Now.ToString());
+                            command.Parameters.AddWithValue("@Salt", salt);
+                            connection.Open();
+                            rowsAffected = command.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //To do: add to windows log
+                    Console.WriteLine("An error has occured: " + ex.Message);
+                    LabelErr.Text = "Couldn't connect to database. Please try again.";
+                    LabelErr.Visible = true;
+                }
+
+                //if details successfully added
+                if (rowsAffected != 0)
+                {
+                    Server.Transfer("UserHome.aspx");
+                }
+
+                else
+                {
+                    string err;
+                    Console.WriteLine("An error has occured: user details not inserted into database");
+                    LabelErr.Text = "Unable to register your details. Please try again.";
+                    LabelErr.Visible = true;
+                    err = "An error has occured: user details not inserted into database" + DateTime.Now;
+                    //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"errorlog.txt", true))
+                    //{
+                    //    file.WriteLine(err);
+                    //}
+                }
+            }
+
+            //if password reenter doesn't match
+            else
+            {
+                PasswordErrLabel.Visible = true;
+                PasswordErrLabel.Text = "Please ensure that passwords match";
+            }
         }
     }
 

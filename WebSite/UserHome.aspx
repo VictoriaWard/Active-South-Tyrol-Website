@@ -14,7 +14,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id= "UserHomeDiv1" class="div">
-        <asp:TextBox ID="UserNameText" runat="server" Height="30px" Width="492px" ReadOnly="True" CssClass="panelHead" Font-Bold="False">User Name</asp:TextBox>
+        <h1><asp:Literal ID="litHeader" runat="server" /></h1>
         
         <div style="float:left;">
             <asp:Panel ID="Panel1" runat="server" CssClass="panel" Height="469px" Width="604px">
@@ -32,7 +32,7 @@
                 <br />
                 <br />
                 <br />
-                <asp:TextBox ID="CurrentStatusText" runat="server" Height="40px" Width="551px" CssClass="textbox2" ReadOnly="True"></asp:TextBox>
+                <asp:TextBox ID="CurrentStatusText" runat="server" Height="227px" Width="551px" CssClass="textbox2" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
             </asp:Panel>
         </div>
 
@@ -61,7 +61,6 @@
                 
                 <br />
                 <br />
-                <asp:Button ID="MyFriends" runat="server" OnClick="MyFriends_Click" Text="My Friends" />
             </asp:Panel>
         </div> 
     &nbsp;&nbsp;&nbsp;
